@@ -1,26 +1,26 @@
-"use client";
+// Import necessary dependencies
+'use client'
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-const LayoutPage = ({ children }: any) => {
-  const [isReady, setIsReady] = useState(false);
-  const isAuthenticated =
-    typeof window !== "undefined" && localStorage.getItem("isLogin");
+const LayoutPage = ({ children }:any) => {
   const router = useRouter();
-  
+
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/auth/login");
+    // Check authentication status on the client side
+    if(children){
+        const isAuthenticated = localStorage.getItem("isLogin");
+    
+        // If not authenticated, redirect to the login page
+        if (!isAuthenticated) {
+          router.push("/auth/login");
+        }
     }
-  setIsReady(true);
-  }, [isAuthenticated, router]);
 
- 
-  const redirect = ()=>{
-    router.push("/auth/login")
-  }
+  }, [router,children]);
 
-  return isReady ? <div>{children}</div>:null;
+  // Return children only when authenticated
+  return <div>{children}</div>;
 };
 
 export default LayoutPage;

@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation';
-
+import { setCookie } from 'cookies-next';
 import React, { useState } from 'react';
 
 const Page = () => {
@@ -20,8 +20,8 @@ const Page = () => {
     e.preventDefault();
 
     if(formData.username === "Kashiram1@gmail.com" && formData.password ==='12345678'){
-        localStorage.setItem("isLogin",JSON.stringify(true));
-        router.push('/dashboard')
+      setCookie('logged', 'true');
+        router.push('/auth/dashboard')
 
 
     }
